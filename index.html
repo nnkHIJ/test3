@@ -149,12 +149,11 @@
                 source: 'population-source',
                 'source-layer': 'population', // データ内のレイヤー名を指定
                 paint: {
-            'fill-color': [
-                'interpolate',
-                ['linear'],
-                ['zoom'],
-                4, [
-                    'case',
+               'fill-color': [
+                    'step',
+                   ['zoom'],
+                   [
+                     'case',
                         ['<=', ['get', 'population'], 20000], '#ffffff', // 白色
                         ['<=', ['get', 'population'], 40000], '#ffe3e3', 
                         ['<=', ['get', 'population'], 60000], '#ffc6c6', 
@@ -167,7 +166,7 @@
                         '#ff0000' 
 
                     ],
-               10, [
+               5, [
                     'case',
                         ['<=', ['get', 'population'], 2500], '#ffffff', // 白色
                         ['<=', ['get', 'population'], 5000], '#ffe3e3', 
@@ -180,7 +179,7 @@
                         ['<=', ['get', 'population'], 22500], '#ff1c1c', 
                         '#ff0000'                     
                     ],
-               19, [
+               11, [
                     'case',
                         ['<=', ['get', 'population'], 1000], '#ffffff', // 白色
                         ['<=', ['get', 'population'], 2000], '#ffe3e3', 
