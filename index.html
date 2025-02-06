@@ -26,6 +26,15 @@
             background-color: #ffffff;
             margin: 3px;
         }
+        #zoom-level {
+            position: absolute;
+            top: 10px;
+            right: 50px;
+            background-color: white;
+            padding: 5px;
+            border-radius: 3px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -58,6 +67,9 @@
             <div id="attributes"></div>
         </div>
     </div>
+    
+    <div id="zoom-level">Zoom: 12</div> 
+    
     <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
     <script src="https://unpkg.com/pmtiles/dist/pmtiles.js"></script>
     <script>
@@ -103,7 +115,10 @@
                         type: 'raster',
                         source: 'osm-tiles',
                         minzoom: 0,
-                        maxzoom: 19
+                        maxzoom: 19,
+                        paint: {
+                            'raster-saturation': -0.5, // 彩度を減らす
+                        }
                     }
                 ]
             },
@@ -253,6 +268,20 @@
             });
 
         });
+
+        // ズームレベルを表示する要素を更新する関数
+        const updateZoomLevel = () => {
+            const zoom = map.getZoom().toFixed(2); // ズームレベルを小数点以下2桁まで表示
+            document.getElementById('zoom-level').innerText = `Zoom: ${zoom}`;
+        }
+
+        // 地図のズームイベントにリスナーを追加
+        map.on('zoom', updateZoomLevel);
+
+        // 初期ズームレベルを表示
+        updateZoomLevel();
+
+        
 
         map.on('click', 'population-fill-layer', e => {
             if (e.features && e.features.length > 0) {
